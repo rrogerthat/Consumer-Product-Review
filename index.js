@@ -36,21 +36,21 @@ function displayProductToPage(data) {
 
 function displayReviewToPage(data) {
 //to display review comments
-  console.log(data); // JSON Object for customer review info
-  if (data.reviews.length === 0) {
-    $(".js-search-results2").html(`<p>No review comments available.</p>`)
-    console.log('No review comments available');
+  // console.log(data); // JSON Object for customer review info
+  if (data.reviews.length === 0) {    //error handling
+    $(".js-search-results2").html(`<p>No review comments available.</p>`);
   } else {
-    for (i = 0; i < data.reviews.length; i++) {   //put to length for now
-    const reviewTitle = data.reviews[i].title;
-    const reviewComment = data.reviews[i].reviewText; //put if statement 
-    $(".js-search-results2").append(`<b>${reviewTitle}</b><br>${reviewComment}<br><br>`);   //include a fail/error function
-    }     // if append, clear out previous search results with jquery search button new. Use strong & paragraph for review comments
+
+      const results = data.reviews.map((item, index) => renderCommentsResult(item));
+      $(".js-search-results2").html(results);
   }
 }
 
 function renderCommentsResult(item) {
-
+  const reviewTitle = item.title;
+  const reviewComment = item.reviewText; //put if statement 
+    return `<em>${reviewTitle}</em><br>${reviewComment}<br><br>`;   
+       // if append, clear out previous search results with jquery search button new. Use strong & paragraph (no <br>) for review comments
 }
 
 function getDataFromTubeApi(searchItem, callback) {
@@ -68,10 +68,15 @@ function getDataFromTubeApi(searchItem, callback) {
 
 function displayVidsToPage(data) {
 //display YouTube thumbnails
-  // console.log(data);
+  console.log(data);
+
+  if (data.items.length === 0) {    //error handling
+    $(".js-search-results3").html(`<p>No video reviews available.</p>`);
+  } else {
 
   const results = data.items.map((item, index) => renderResult(item));
   $(".js-search-results3").html(results);
+  }
 }
 
 function renderResult(item) {   //item is each object in array
@@ -83,7 +88,7 @@ function renderResult(item) {   //item is each object in array
 }
 
 function displError(err) {
-  $(".js-search-results2").html(`<p>No review comments available.</p>`);
+  $(".js-search-results3").html(`<p>No video reviews available.</p>`);
 }
 
 function beginSearch() {
