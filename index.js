@@ -15,7 +15,7 @@ function getDataFromWalApi(searchItem, callback) {
 
 function displayProductToPage(data) {
 //to display item name & img and retrieve item ID to get review comments JSON data
-console.log(data); //display JSON object
+// console.log(data); //display JSON object
   const itemModel = data.items[0].name; //item name
   const itemImg = `<img src="${data.items[0].imageEntities[0].mediumImage}" alt="thumbnail">`;   // item img
   $(".js-search-results").html(itemModel + "<br>" + itemImg);
@@ -31,19 +31,26 @@ console.log(data); //display JSON object
     jsonp: "callback",
     dataType: "jsonp",
     success: displayReviewToPage
-  });
-    
+  }).fail(displError);  //.fail is callback if API doesn't return anything from AJAX calls.
 }
 
 function displayReviewToPage(data) {
 //to display review comments
-  // console.log(data); // JSON Object for customer review info
-  
-  for (i = 0; i < 4; i++) {
-  const reviewTitle = data.reviews[i].title;
-  const reviewComment = data.reviews[i].reviewText;
-  $(".js-search-results2").html(`<b>${reviewTitle}</b><br>${reviewComment}<br><br>`);   //include a fail/error function
+  console.log(data); // JSON Object for customer review info
+  if (data.reviews.length === 0) {
+    $(".js-search-results2").html(`<p>No review comments available.</p>`)
+    console.log('No review comments available');
+  } else {
+    for (i = 0; i < data.reviews.length; i++) {   //put to length for now
+    const reviewTitle = data.reviews[i].title;
+    const reviewComment = data.reviews[i].reviewText; //put if statement 
+    $(".js-search-results2").append(`<b>${reviewTitle}</b><br>${reviewComment}<br><br>`);   //include a fail/error function
+    }     // if append, clear out previous search results with jquery search button new. Use strong & paragraph for review comments
   }
+}
+
+function renderCommentsResult(item) {
+
 }
 
 function getDataFromTubeApi(searchItem, callback) {
@@ -75,6 +82,9 @@ function renderResult(item) {   //item is each object in array
   return `<p>${videoTitle}</p><a href="https://www.youtube.com/watch?v=${videoLink}" target="_blank"><img src="${thumbnailPic}" alt="thumbnail"></a>`;
 }
 
+function displError(err) {
+  $(".js-search-results2").html(`<p>No review comments available.</p>`);
+}
 
 function beginSearch() {
 //start app when search begins
