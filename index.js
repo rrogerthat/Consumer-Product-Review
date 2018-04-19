@@ -1,14 +1,12 @@
-const WALMART_SEARCH_URL = 'https://api.walmartlabs.com/v1/search?&format=json&apiKey=738gx42wg2zuq5cxrc4rfn7v&numItems=4&query=hp+laptop';
-
 const YOUTUBE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
 
-function getDataFromWalApi(callback) {
+function getDataFromWalApi(searchItem, callback) {
 //retrieve data from Walmart API based on what you searched for
 
   // $.getJSON(WALMART_SEARCH_URL, callback); //does not work with CORS
   
   $.ajax({
-    url: WALMART_SEARCH_URL,
+    url: `https://api.walmartlabs.com/v1/search?&format=json&apiKey=738gx42wg2zuq5cxrc4rfn7v&numItems=4&query=${searchItem}`,
     jsonp: "callback",
     dataType: "jsonp",
     success: displayProductToPage
@@ -17,7 +15,7 @@ function getDataFromWalApi(callback) {
 
 function displayProductToPage(data) {
 //to display item name & img and retrieve item ID to get review comments JSON data
-// console.log(data); //display JSON object
+console.log(data); //display JSON object
   const itemModel = data.items[0].name; //item name
   const itemImg = `<img src="${data.items[0].imageEntities[0].mediumImage}" alt="thumbnail">`;   // item img
   $(".js-search-results").html(itemModel + "<br>" + itemImg);
@@ -44,14 +42,14 @@ function displayReviewToPage(data) {
   for (i = 0; i < 4; i++) {
   const reviewTitle = data.reviews[i].title;
   const reviewComment = data.reviews[i].reviewText;
-  $(".js-search-results2").append(`<b>${reviewTitle}</b><br>${reviewComment}<br><br>`);
+  $(".js-search-results2").html(`<b>${reviewTitle}</b><br>${reviewComment}<br><br>`);   //include a fail/error function
   }
 }
 
-function getDataFromTubeApi(callback) {
+function getDataFromTubeApi(searchItem, callback) {
 //retrieve data from YouTube API based on what you searched for
     const query = {
-    q: `HP 15-bs020WM review in:name`, 
+    q: `${searchItem} review in:name`, 
     maxResults: 4,
     type: 'video',
     part: 'snippet',
@@ -63,10 +61,10 @@ function getDataFromTubeApi(callback) {
 
 function displayVidsToPage(data) {
 //display YouTube thumbnails
-  console.log(data);
+  // console.log(data);
 
   const results = data.items.map((item, index) => renderResult(item));
-  $('.js-search-results3').html(results);
+  $(".js-search-results3").html(results);
 }
 
 function renderResult(item) {   //item is each object in array
@@ -80,8 +78,15 @@ function renderResult(item) {   //item is each object in array
 
 function beginSearch() {
 //start app when search begins
-  getDataFromWalApi(displayProductToPage);
-  getDataFromTubeApi(displayVidsToPage);
+  $(".js-search-form").submit(function(event) {
+    event.preventDefault();
+    const inputTarget = $(this).find(".js-query");
+    const targetVal = inputTarget.val();
+    inputTarget.val("");
+
+  getDataFromWalApi(targetVal, displayProductToPage);
+  getDataFromTubeApi(targetVal, displayVidsToPage);
+  });
 }
 
 $(beginSearch);
