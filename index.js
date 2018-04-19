@@ -18,7 +18,7 @@ function displayProductToPage(data) {
 // console.log(data); //display JSON object
   const itemModel = data.items[0].name; //item name
   const itemImg = `<img src="${data.items[0].imageEntities[0].mediumImage}" alt="thumbnail">`;   // item img
-  $(".js-search-results").html(itemModel + "<br>" + itemImg);
+  $(".js-search-results").html("<h3>" + itemModel + "</h3>" + "<br>" + itemImg);
 
   
   const WALMART_REVIEW_URL = `https://api.walmartlabs.com/v1/reviews/${data.items[0].itemId}?format=json&apiKey=738gx42wg2zuq5cxrc4rfn7v`;
@@ -31,7 +31,7 @@ function displayProductToPage(data) {
     jsonp: "callback",
     dataType: "jsonp",
     success: displayReviewToPage
-  }).fail(displError);  //.fail is callback if API doesn't return anything from AJAX calls.
+  })
 }
 
 function displayReviewToPage(data) {
@@ -40,9 +40,14 @@ function displayReviewToPage(data) {
   if (data.reviews.length === 0) {    //error handling
     $(".js-search-results2").html(`<p>No review comments available.</p>`);
   } else {
-
       const results = data.reviews.map((item, index) => renderCommentsResult(item));
-      $(".js-search-results2").html(results);
+      $(".js-search-results").on('click', 'h3', function(event) {
+        $(".js-search-results2").html(results);                       //if next product has no comments,prev comments get displayed
+      }); 
+
+      $(".js-search-results").on('click', 'img', function(event) {    //combine these two???
+        $(".js-search-results2").html(results);               
+      }); 
   }
 }
 
@@ -98,6 +103,8 @@ function beginSearch() {
     const inputTarget = $(this).find(".js-query");
     const targetVal = inputTarget.val();
     inputTarget.val("");
+
+    $(".js-search-results2").empty();   //to clear out comments from previously searched item
 
   getDataFromWalApi(targetVal, displayProductToPage);
   getDataFromTubeApi(targetVal, displayVidsToPage);
