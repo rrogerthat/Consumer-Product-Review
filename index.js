@@ -1,28 +1,31 @@
-const YOUTUBE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
-
 function getDataFromWalApi(searchItem, callback) {
 //retrieve data from Walmart API based on what you searched for
 
   // $.getJSON(WALMART_SEARCH_URL, callback); //does not work with CORS
   
   $.ajax({
-    url: `https://api.walmartlabs.com/v1/search?&format=json&apiKey=738gx42wg2zuq5cxrc4rfn7v&numItems=4&query=${searchItem}`,
+    url: `https://api.walmartlabs.com/v1/search?&format=json&apiKey=738gx42wg2zuq5cxrc4rfn7v&numItems=3&query=${searchItem}`, //max 4 results
     jsonp: "callback",
     dataType: "jsonp",
     success: displayProductToPage
   });
 }
 
+function renderProductTitle(item) {
+//template of product title and image
+  return `<h3>${item.name}</h3><br><img src="${item.imageEntities[0].mediumImage}" alt="thumbnail">`;   
+// item title and img
+}
+
 function displayProductToPage(data) {
 //to display item name & img and retrieve item ID to get review comments JSON data
 // console.log(data); //display JSON object
-  const itemModel = data.items[0].name; //item name
-  const itemImg = `<img src="${data.items[0].imageEntities[0].mediumImage}" alt="thumbnail">`;   // item img
-  $(".js-search-results").html("<h3>" + itemModel + "</h3>" + "<br>" + itemImg);
+    const results = data.items.map((item, index) => renderProductTitle(item));
+  $('.js-search-results').html(results); //data is object, items is array
 
-  
+
+                              //for just 1 item so far??? make the comments request after you click on img, shopping list app ref
   const WALMART_REVIEW_URL = `https://api.walmartlabs.com/v1/reviews/${data.items[0].itemId}?format=json&apiKey=738gx42wg2zuq5cxrc4rfn7v`;
-  
     // $.getJSON(WALMART_REVIEW_URL, displayReviewToPage); //bad with CORS
     //need ID from 1st JSON object to get review info from 2nd JSON object
       
@@ -30,33 +33,51 @@ function displayProductToPage(data) {
     url: WALMART_REVIEW_URL,
     jsonp: "callback",
     dataType: "jsonp",
-    success: displayReviewToPage
-  })
+    success: displayReviewsToPage(1)
+  });
+
+  const WALMART_REVIEW2_URL = `https://api.walmartlabs.com/v1/reviews/${data.items[1].itemId}?format=json&apiKey=738gx42wg2zuq5cxrc4rfn7v`;
+
+    $.ajax({
+    url: WALMART_REVIEW2_URL,
+    jsonp: "callback",
+    dataType: "jsonp",
+    success: displayReviewsToPage(2)
+  });
+
+  const WALMART_REVIEW3_URL = `https://api.walmartlabs.com/v1/reviews/${data.items[2].itemId}?format=json&apiKey=738gx42wg2zuq5cxrc4rfn7v`;
+
+    $.ajax({
+    url: WALMART_REVIEW3_URL,
+    jsonp: "callback",
+    dataType: "jsonp",
+    success: displayReviewsToPage(3)
+  });
 }
 
-function displayReviewToPage(data) {
-//to display review comments
-  // console.log(data); // JSON Object for customer review info
-  if (data.reviews.length === 0) {    //error handling
+function displayReviewsToPage(reviewOrder) {
+  return function(data) {               //function returning a function so scale down to 1 function
+    if (data.reviews.length === 0) {    //error handling
     $(".js-search-results2").html(`<p>No review comments available.</p>`);
   } else {
       const results = data.reviews.map((item, index) => renderCommentsResult(item));
-      $(".js-search-results").on('click', 'h3', function(event) {
-        $(".js-search-results2").html(results);                       //if next product has no comments,prev comments get displayed
+      $(".js-search-results").on('click',`img:nth-of-type(${reviewOrder}), h3:nth-of-type(${reviewOrder})`,  function(event) {
+        console.log('userClicked');
+        $(".js-search-results2").html(`<p><u>Customer Reviews:</u></p> ${results.join("")}`); //join so no commas before each Title
       }); 
-
-      $(".js-search-results").on('click', 'img', function(event) {    //combine these two???
-        $(".js-search-results2").html(results);               
-      }); 
+    }
   }
 }
 
 function renderCommentsResult(item) {
+  // console.log(item);
   const reviewTitle = item.title;
   const reviewComment = item.reviewText; //put if statement 
     return `<em>${reviewTitle}</em><br>${reviewComment}<br><br>`;   
        // if append, clear out previous search results with jquery search button new. Use strong & paragraph (no <br>) for review comments
 }
+
+const YOUTUBE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
 
 function getDataFromTubeApi(searchItem, callback) {
 //retrieve data from YouTube API based on what you searched for
@@ -73,18 +94,18 @@ function getDataFromTubeApi(searchItem, callback) {
 
 function displayVidsToPage(data) {
 //display YouTube thumbnails
-  console.log(data);
+  // console.log(data);
 
   if (data.items.length === 0) {    //error handling
     $(".js-search-results3").html(`<p>No video reviews available.</p>`);
   } else {
 
-  const results = data.items.map((item, index) => renderResult(item));
-  $(".js-search-results3").html(results);
+  const results = data.items.map((item, index) => renderVideo(item));
+  $(".js-search-results3").html(`<p><u>Video Reviews:</u></p> ${results}`);
   }
 }
 
-function renderResult(item) {   //item is each object in array
+function renderVideo(item) {   //item is each object in array
 //template of what to display in this function alone
   const videoTitle = item.snippet.title;
   const thumbnailPic = item.snippet.thumbnails.medium.url;
