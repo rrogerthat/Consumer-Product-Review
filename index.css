@@ -8,6 +8,46 @@
 	text-decoration: underline;
 }
 
+.js-search-results h4 {
+	text-decoration: underline;
+}
+
+body {
+	background-image: url("http://www.powerpointhintergrund.com/uploads/2017/05/blue-wavy-ppt-backgrounds-template-for-presentation-ppt-backgrounds--7.jpeg");
+	background-repeat: no-repeat;
+}
+
+.js-search-results2 > p {
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+.js-search-results3 > h4 {
+	text-decoration: underline;
+	font-weight: bold;
+}
+
+.js-search-results3 > p {
+	font-weight: bold;
+}
+
 input {
 	width: 40%;
+}
+
+
+
+.js-search-results {
+	float: left;
+	width: 50%;
+}
+
+.js-search-results2 {
+	float: left;
+	width: 50%;
+}
+
+.js-search-results3 {
+	clear:both;
+	padding-top: 15px;
 }

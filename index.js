@@ -21,7 +21,7 @@ function displayProductToPage(data) {
 //to display item name & img and retrieve item ID to get review comments JSON data
 // console.log(data); //display JSON object
     const results = data.items.map((item, index) => renderProductTitle(item));
-  $('.js-search-results').html(results); //data is object, items is array
+  $('.js-search-results').html(`<h4>Items:</h4> ${results}`); //data is object, items is array
 
 
                               //for just 1 item so far??? make the comments request after you click on img, shopping list app ref
@@ -56,21 +56,23 @@ function displayProductToPage(data) {
 }
 
 function displayReviewsToPage(reviewOrder) {
-  return function(data) {               //function returning a function so scale down to 1 function
-    if (data.reviews.length === 0) {    //error handling
-    $(".js-search-results2").html(`<p>No review comments available.</p>`);
-  } else {
-      const results = data.reviews.map((item, index) => renderCommentsResult(item));
-      $(".js-search-results").on('click',`img:nth-of-type(${reviewOrder}), h3:nth-of-type(${reviewOrder})`,  function(event) {
-        console.log('userClicked');
-        $(".js-search-results2").html(`<p><u>Customer Reviews:</u></p> ${results.join("")}`); //join so no commas before each Title
-      }); 
-    }
-  }
+  return function(data) {               //function returning a function so scale down to 1 function (instead of 3 for each item)
+
+    const results = data.reviews.map((item, index) => renderCommentsResult(item));
+    $(".js-search-results").on('click',`img:nth-of-type(${reviewOrder}), h3:nth-of-type(${reviewOrder})`,  function(event) {
+          // console.log('userClicked');
+          
+      if (data.reviews.length === 0) {    //error handling
+        $(".js-search-results2").html(`<p>No review comments available.</p>`);
+      } else {        
+        $(".js-search-results2").html(`<p>Customer Reviews:</p> ${results.join("")}`); //join so no commas before each Title
+        }
+    });
+  };
 }
 
 function renderCommentsResult(item) {
-  // console.log(item);
+  console.log(item);
   const reviewTitle = item.title;
   const reviewComment = item.reviewText; //put if statement 
     return `<em>${reviewTitle}</em><br>${reviewComment}<br><br>`;   
@@ -101,7 +103,7 @@ function displayVidsToPage(data) {
   } else {
 
   const results = data.items.map((item, index) => renderVideo(item));
-  $(".js-search-results3").html(`<p><u>Video Reviews:</u></p> ${results}`);
+  $(".js-search-results3").html(`<h4>Video Reviews:</h4> ${results}`);
   }
 }
 
@@ -125,7 +127,7 @@ function beginSearch() {
     const targetVal = inputTarget.val();
     inputTarget.val("");
 
-    $(".js-search-results2").empty();   //to clear out comments from previously searched item
+    $(".js-search-results2").empty();   //to clear out comments from previously searched item (not working)
 
   getDataFromWalApi(targetVal, displayProductToPage);
   getDataFromTubeApi(targetVal, displayVidsToPage);
