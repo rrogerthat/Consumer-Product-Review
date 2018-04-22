@@ -21,8 +21,11 @@
 	background-repeat: no-repeat;
 }*/
 
+.js-search-results > p {
+	font-weight: bold;
+}
+
 .js-search-results2 > p {
-	text-decoration: underline;
 	font-weight: bold;
 }
 

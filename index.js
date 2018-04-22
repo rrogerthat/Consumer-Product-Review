@@ -25,9 +25,13 @@ function renderProductTitle(item) {
 
 function displayProductToPage(data) {
 //to display item name & img and retrieve item ID to get review comments JSON data
-// console.log(data); //display JSON object
-  const results = data.items.map((item, index) => renderProductTitle(item));
-  $('.js-search-results').html(`<h4>Items with Customer Feedback:</h4> ${results.join("")}`); //data is object, items is array
+console.log(data); //display JSON object
+  if (data.numItems == 0) {
+    $('.js-search-results').html(`<p>No products available for Customer Review Comments</p>`);
+  } else {
+      const results = data.items.map((item, index) => renderProductTitle(item));
+      $('.js-search-results').html(`<h4>Items with Customer Feedback:</h4> ${results.join("")}`); //data is object, items is array
+  }
 
 
                               //for just 1 item so far??? make the comments request after you click on img, shopping list app ref
@@ -68,10 +72,10 @@ function displayReviewsToPage(reviewOrder) {
     $(".js-search-results").on('click',`img:nth-of-type(${reviewOrder}), h3:nth-of-type(${reviewOrder})`,  function(event) {
           // console.log('userClicked');
 
-          const targetImage = $(`img:nth-of-type(${reviewOrder})`);   //provide border around currently selected item that comments are displayed
-          const otherImages = $("img").not(targetImage);
-          otherImages.removeClass("imgSelected");
-          targetImage.addClass("imgSelected");
+      const targetImage = $(`img:nth-of-type(${reviewOrder})`);   //provide border around currently selected item that comments are displayed
+      const otherImages = $("img").not(targetImage);
+      otherImages.removeClass("imgSelected");
+      targetImage.addClass("imgSelected");
           
       if (data.reviews.length === 0) {    //error handling
         $(".js-search-results2").html(`<p>No review comments available.</p>`);
