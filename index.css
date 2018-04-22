@@ -16,10 +16,11 @@
 	text-decoration: underline;
 }
 
-/*body {
-	background-image: url("https://78.media.tumblr.com/20b34e8d12d4230f9b362d7feb148c57/tumblr_oiwytz4dh41tf8vylo1_1280.png");
+body {
+	background-image: url("background image.jpeg");
 	background-repeat: no-repeat;
-}*/
+	background-size:cover
+}
 
 .js-search-results > p {
 	font-weight: bold;
