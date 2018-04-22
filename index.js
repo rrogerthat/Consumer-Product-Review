@@ -13,15 +13,21 @@ function getDataFromWalApi(searchItem, callback) {
 
 function renderProductTitle(item) {
 //template of product title and image
-  return `<h3>${item.name}</h3><br><img src="${item.imageEntities[0].mediumImage}" alt="thumbnail">`;   
-// item title and img
+// console.log(item);
+  if (item.name === undefined) {
+    return `<p>No products available for Customer Review Comments</p>`;
+  } else if (item.imageEntities === undefined) {
+      return `<h3>${item.name}</h3><br><img src="${item.mediumImage}" alt="thumbnail">`;
+  } else {
+      return `<h3>${item.name}</h3><br><img src="${item.imageEntities[0].mediumImage}" alt="thumbnail">`;
+  } 
 }
 
 function displayProductToPage(data) {
 //to display item name & img and retrieve item ID to get review comments JSON data
 // console.log(data); //display JSON object
-    const results = data.items.map((item, index) => renderProductTitle(item));
-  $('.js-search-results').html(`<h4>Items:</h4> ${results}`); //data is object, items is array
+  const results = data.items.map((item, index) => renderProductTitle(item));
+  $('.js-search-results').html(`<h4>Items with Customer Feedback:</h4> ${results.join("")}`); //data is object, items is array
 
 
                               //for just 1 item so far??? make the comments request after you click on img, shopping list app ref
@@ -57,10 +63,15 @@ function displayProductToPage(data) {
 
 function displayReviewsToPage(reviewOrder) {
   return function(data) {               //function returning a function so scale down to 1 function (instead of 3 for each item)
-
+  console.log(data);
     const results = data.reviews.map((item, index) => renderCommentsResult(item));
     $(".js-search-results").on('click',`img:nth-of-type(${reviewOrder}), h3:nth-of-type(${reviewOrder})`,  function(event) {
           // console.log('userClicked');
+
+          const targetImage = $(`img:nth-of-type(${reviewOrder})`);   //provide border around currently selected item that comments are displayed
+          const otherImages = $("img").not(targetImage);
+          otherImages.removeClass("imgSelected");
+          targetImage.addClass("imgSelected");
           
       if (data.reviews.length === 0) {    //error handling
         $(".js-search-results2").html(`<p>No review comments available.</p>`);
@@ -72,11 +83,16 @@ function displayReviewsToPage(reviewOrder) {
 }
 
 function renderCommentsResult(item) {
-  console.log(item);
+  // console.log(item);
   const reviewTitle = item.title;
-  const reviewComment = item.reviewText; //put if statement 
-    return `<em>${reviewTitle}</em><br>${reviewComment}<br><br>`;   
-       // if append, clear out previous search results with jquery search button new. Use strong & paragraph (no <br>) for review comments
+  const reviewComment = item.reviewText; //put if statement
+
+  if (reviewTitle === undefined) {
+    return `<em>No Review Title available</em><br>${reviewComment}<br><br>`; 
+  } else {
+      return `<em>${reviewTitle}</em><br>${reviewComment}<br><br>`;   
+    // if append, clear out previous search results with jquery search button new. Use strong & paragraph (no <br>) for review comments
+    }
 }
 
 const YOUTUBE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
@@ -103,7 +119,7 @@ function displayVidsToPage(data) {
   } else {
 
   const results = data.items.map((item, index) => renderVideo(item));
-  $(".js-search-results3").html(`<h4>Video Reviews:</h4> ${results}`);
+  $(".js-search-results3").html(`<h4>Video Reviews:</h4> ${results.join("")}`);
   }
 }
 
@@ -112,8 +128,8 @@ function renderVideo(item) {   //item is each object in array
   const videoTitle = item.snippet.title;
   const thumbnailPic = item.snippet.thumbnails.medium.url;
   const videoLink = item.id.videoId;
-  return `<p>${videoTitle}</p><a href="https://www.youtube.com/watch?v=${videoLink}" target="_blank"><img src="${thumbnailPic}" alt="thumbnail"></a>`;
-}
+  return `<p>${videoTitle}</p><iframe width="420" height="315" src="https://www.youtube.com/embed/${videoLink}" allowfullscreen></iframe>`;
+}                                                                                       //changed to /embed from /watch?v= to display
 
 function displError(err) {
   $(".js-search-results3").html(`<p>No video reviews available.</p>`);

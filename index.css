@@ -1,7 +1,11 @@
 .js-search-results img:hover {
-  opacity: 0.8;
-  border-top: 1px solid blue;
-  transition: 0.5s ease;
+  box-shadow: 8px 8px 8px gray;
+  /*transition: 0.5s ease;*/
+}
+
+.imgSelected {				/*Show what item you currently have selected */
+	border:2px solid #ccc;
+	box-shadow: 4px 4px 4px gray;
 }
 
 .js-search-results h3:hover {
@@ -31,6 +35,15 @@ body {
 	font-weight: bold;
 }
 
+
+.js-search-results3 p:hover {
+	text-decoration: underline;
+}
+
+.js-search-results3 iframe:hover {
+  box-shadow: 6px 6px 6px gray;
+}
+
 input {
 	width: 40%;
 }
@@ -50,4 +63,5 @@ input {
 .js-search-results3 {
 	clear:both;
 	padding-top: 15px;
+	width: 50%;
 }
