@@ -132,7 +132,7 @@ function renderVideo(item) {   //item is each object in array
   const videoTitle = item.snippet.title;
   const thumbnailPic = item.snippet.thumbnails.medium.url;
   const videoLink = item.id.videoId;
-  return `<p>${videoTitle}</p><iframe width="420" height="315" src="https://www.youtube.com/embed/${videoLink}" allowfullscreen></iframe>`;
+  return `<p>${videoTitle}</p><iframe width="420" height="315" src="https://www.youtube.com/embed/${videoLink}" frameBorder="0" allowfullscreen></iframe>`;
 }                                                                                       //changed to /embed from /watch?v= to display
 
 function displError(err) {
