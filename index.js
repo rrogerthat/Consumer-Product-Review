@@ -25,7 +25,7 @@ function renderProductTitle(item) {
 
 function displayProductToPage(data) {
 //to display item name & img and retrieve item ID to get review comments JSON data
-console.log(data); //display JSON object
+// console.log(data); //display JSON object
   if (data.numItems == 0) {
     $('.js-search-results').html(`<p>No products available for Customer Review Comments</p>`);
   } else {
@@ -67,7 +67,7 @@ console.log(data); //display JSON object
 
 function displayReviewsToPage(reviewOrder) {
   return function(data) {               //function returning a function so scale down to 1 function (instead of 3 for each item)
-  console.log(data);
+  // console.log(data);
     const results = data.reviews.map((item, index) => renderCommentsResult(item));
     $(".js-search-results").on('click',`img:nth-of-type(${reviewOrder}), h3:nth-of-type(${reviewOrder})`,  function(event) {
           // console.log('userClicked');
@@ -87,7 +87,7 @@ function displayReviewsToPage(reviewOrder) {
 }
 
 function renderCommentsResult(item) {
-  // console.log(item);
+  console.log(item);
   const reviewTitle = item.title;
   const reviewComment = item.reviewText; //put if statement
 
@@ -108,7 +108,7 @@ function getDataFromTubeApi(searchItem, callback) {
     maxResults: 4,
     type: 'video',
     part: 'snippet',
-    key: 'AIzaSyBesu0BNRelJsHk1k62KTugc1CJGtPFH8I',
+    key: 'AIzaSyBesu0BNRelJsHk1k62KTugc1CJGtPFH8I'
   };
   
   $.getJSON(YOUTUBE_SEARCH_URL, query, callback);
