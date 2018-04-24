@@ -8,11 +8,16 @@
 	box-shadow: 4px 4px 4px gray;
 }
 
+/*.itemGroup {
+	display: inline-block;
+}*/
+
 .js-search-results h3:hover {
 	text-decoration: underline;
 }
 
 .js-search-results h4 {
+	display: inline-block;		/** so video link can be next to it **/
 	text-decoration: underline;
 }
 
@@ -26,6 +31,14 @@ body {
 	font-weight: bold;
 }
 
+.js-search-results > button {	/** video link to video section **/
+	margin-left: 70px;
+}
+
+.js-search-results > button > a:link {
+	text-decoration: none;
+}
+
 .js-search-results2 > p {
 	font-weight: bold;
 }
@@ -33,19 +46,27 @@ body {
 .js-search-results3 > h4 {
 	text-decoration: underline;
 	font-weight: bold;
+	display: inline-block;	/** so Customer Feedback link can be next to it **/
 }
 
 .js-search-results3 > p {
 	font-weight: bold;
 }
 
-
 .js-search-results3 p:hover {
 	text-decoration: underline;
 }
 
-.js-search-results3 iframe:hover {
-  box-shadow: 6px 6px 6px gray;
+.js-search-results3 img:hover {
+  box-shadow: 8px 8px 8px gray;
+}
+
+.js-search-results3 > button {	/** link to Customer Feedback section **/
+	margin-left: 70px;
+}
+
+.js-search-results3 > button > a:link {
+	text-decoration: none;
 }
 
 input {
@@ -54,7 +75,7 @@ input {
 
 
 
-.js-search-results {
+/*.js-search-results {
 	float: left;
 	width: 50%;
 }
@@ -68,4 +89,4 @@ input {
 	clear:both;
 	padding-top: 15px;
 	width: 50%;
-}
+}*/

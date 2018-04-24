@@ -20,17 +20,17 @@ function renderProductTitle(item) {
       return `<h3>${item.name}</h3><br><img src="${item.mediumImage}" alt="thumbnail">`;
   } else {
       return `<h3>${item.name}</h3><br><img src="${item.imageEntities[0].mediumImage}" alt="thumbnail">`;
-  } 
+  }   // <a href=`h3:nth-of-type(${reviewOrder})`></a>
 }
 
 function displayProductToPage(data) {
 //to display item name & img and retrieve item ID to get review comments JSON data
 // console.log(data); //display JSON object
-  if (data.numItems == 0) {
+  if (data.numItems === 0) {
     $('.js-search-results').html(`<p>No products available for Customer Review Comments</p>`);
   } else {
       const results = data.items.map((item, index) => renderProductTitle(item));
-      $('.js-search-results').html(`<h4>Items with Customer Feedback:</h4> ${results.join("")}`); //data is object, items is array
+      $('.js-search-results').html(`<h4>Items with Customer Feedback:</h4><button type="button"><a href="#vidsSec">To Video Reviews Section</a></button> ${results.join("")}`); //data is object, items is array
   }
 
 
@@ -76,11 +76,14 @@ function displayReviewsToPage(reviewOrder) {
       const otherImages = $("img").not(targetImage);
       otherImages.removeClass("imgSelected");
       targetImage.addClass("imgSelected");
-          
+
+      $(".cr").remove();  //clear out previous comments and one's related to other products before displaying new comments
+
       if (data.reviews.length === 0) {    //error handling
-        $(".js-search-results2").html(`<p>No review comments available.</p>`);
-      } else {        
-        $(".js-search-results2").html(`<p>Customer Reviews:</p> ${results.join("")}`); //join so no commas before each Title
+        $(`.js-search-results img:nth-of-type(${reviewOrder})`).after(`<p class="cr">No review comments available.</p>`);
+      } else {  //Don't need quote marks if we use template strings for jquery selector?   
+        $(`.js-search-results img:nth-of-type(${reviewOrder})`).after(`<div class="cr"><p>Customer Reviews:</p> ${results.join("")}</div>`)
+        //join so no commas before each Title
         }
     });
   };
@@ -104,7 +107,7 @@ const YOUTUBE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
 function getDataFromTubeApi(searchItem, callback) {
 //retrieve data from YouTube API based on what you searched for
     const query = {
-    q: `${searchItem} review in:name`, 
+    q: `${searchItem} review`, 
     maxResults: 4,
     type: 'video',
     part: 'snippet',
@@ -123,8 +126,10 @@ function displayVidsToPage(data) {
   } else {
 
   const results = data.items.map((item, index) => renderVideo(item));
-  $(".js-search-results3").html(`<h4>Video Reviews:</h4> ${results.join("")}`);
+  $(".js-search-results3").html(`<h4>Video Reviews:</h4><button type="button"><a href="#feedbackSec">To Customer Reviews Section</a></button> ${results.join("")}`);
   }
+
+   $('a.html5lightbox').html5lightbox();  //achor tag not in DOM yet so put here for lightbox to work
 }
 
 function renderVideo(item) {   //item is each object in array
@@ -132,7 +137,7 @@ function renderVideo(item) {   //item is each object in array
   const videoTitle = item.snippet.title;
   const thumbnailPic = item.snippet.thumbnails.medium.url;
   const videoLink = item.id.videoId;
-  return `<p>${videoTitle}</p><iframe width="420" height="315" src="https://www.youtube.com/embed/${videoLink}" frameBorder="0" allowfullscreen></iframe>`;
+    return `<a href="https://www.youtube.com/watch?v=${videoLink}" class="html5lightbox"><p>${videoTitle}</p><img src="${thumbnailPic}" alt="thumbnail"></a>`;
 }                                                                                       //changed to /embed from /watch?v= to display
 
 function displError(err) {
@@ -147,10 +152,10 @@ function beginSearch() {
     const targetVal = inputTarget.val();
     inputTarget.val("");
 
-    $(".js-search-results2").empty();   //to clear out comments from previously searched item (not working)
-
   getDataFromWalApi(targetVal, displayProductToPage);
   getDataFromTubeApi(targetVal, displayVidsToPage);
+
+  $(".queryItem").html(`Search results for: ${targetVal}`);   
   });
 }
 
