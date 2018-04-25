@@ -1,41 +1,90 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background: #98A4B1;
+	color: #354C69;
+	font-family: 'Titillium Web', sans-serif;
+}
+
+h1, .caption {
+	text-align: center;
+}
+
+.search-form {
+	text-align: center;
+}
+
+input.query {
+	width: 80%;
+	color: #354C69;
+	font-family: 'Titillium Web', sans-serif;
+	padding: 3px;
+}
+
+input.query::-webkit-input-placeholder {			/* input box placeholder for various browsers */
+	opacity: 0.85;
+	font-family: 'Titillium Web', sans-serif;
+}
+
+input.query::-moz-placeholder {			
+	opacity: 0.85;
+	font-family: 'Titillium Web', sans-serif;
+}
+
+input.query:-ms-input-placeholder {			
+	opacity: 0.85;
+	font-family: 'Titillium Web', sans-serif;
+}
+
+input.query:-moz-placeholder {			
+	opacity: 0.85;
+	font-family: 'Titillium Web', sans-serif;
+}
+
+button {							/*search button */
+	border: none;
+	background-color: #4F647E;
+	color: #CCD1D8;
+	font-family: 'Titillium Web', sans-serif;
+	margin-left: 3px;
+	padding: 2px 4px;
+}
+
+button:hover {
+	font-weight: bold;
+	box-shadow: 3px 3px 3px gray;
+}
+
 .js-search-results img:hover {
   box-shadow: 8px 8px 8px gray;
-  /*transition: 0.5s ease;*/
 }
 
 .imgSelected {				/*Show what item you currently have selected */
 	border:2px solid #ccc;
-	box-shadow: 4px 4px 4px gray;
+	box-shadow: 5px 5px 5px gray;
 }
-
-/*.itemGroup {
-	display: inline-block;
-}*/
 
 .js-search-results h3:hover {
 	text-decoration: underline;
 }
 
 .js-search-results h4 {
-	display: inline-block;		/** so video link can be next to it **/
 	text-decoration: underline;
 }
 
-body {
-	background-image: url("background image.jpeg");
-	background-repeat: no-repeat;
-	background-size:cover
+.js-search-results > p {	/** Click on each thumbnail to display comments **/
+	font-style: italic;
 }
 
-.js-search-results > p {
+.js-search-results div > p {	/** Consumer Reviews **/
+	text-decoration: underline;
 	font-weight: bold;
 }
 
-.js-search-results > button {	/** video link to video section **/
-	margin-left: 70px;
-}
-
-.js-search-results > button > a:link {
+.js-search-results > button > a {
+	color: #CCD1D8;
 	text-decoration: none;
 }
 
@@ -46,11 +95,10 @@ body {
 .js-search-results3 > h4 {
 	text-decoration: underline;
 	font-weight: bold;
-	display: inline-block;	/** so Customer Feedback link can be next to it **/
 }
 
-.js-search-results3 > p {
-	font-weight: bold;
+.js-search-results3 > p {	/** Click on each thumbnail to play video **/
+	font-style: italic;
 }
 
 .js-search-results3 p:hover {
@@ -61,19 +109,10 @@ body {
   box-shadow: 8px 8px 8px gray;
 }
 
-.js-search-results3 > button {	/** link to Customer Feedback section **/
-	margin-left: 70px;
-}
-
-.js-search-results3 > button > a:link {
+.js-search-results3 > button > a {
+	color: #CCD1D8;
 	text-decoration: none;
 }
-
-input {
-	width: 40%;
-}
-
-
 
 /*.js-search-results {
 	float: left;

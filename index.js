@@ -15,7 +15,7 @@ function renderProductTitle(item) {
 //template of product title and image
 // console.log(item);
   if (item.name === undefined) {
-    return `<p>No products available for Customer Review Comments</p>`;
+    return `<p>No products available for Consumer Review Comments</p>`;
   } else if (item.imageEntities === undefined) {
       return `<h3>${item.name}</h3><br><img src="${item.mediumImage}" alt="thumbnail">`;
   } else {
@@ -27,10 +27,14 @@ function displayProductToPage(data) {
 //to display item name & img and retrieve item ID to get review comments JSON data
 // console.log(data); //display JSON object
   if (data.numItems === 0) {
-    $('.js-search-results').html(`<p>No products available for Customer Review Comments</p>`);
+    $('.js-search-results').html(`<p>No products available for Consumer Review Comments</p>`);
   } else {
       const results = data.items.map((item, index) => renderProductTitle(item));
-      $('.js-search-results').html(`<h4>Items with Customer Feedback:</h4><button type="button"><a href="#vidsSec">To Video Reviews Section</a></button> ${results.join("")}`); //data is object, items is array
+
+      const vidButton = `<button type="button"><a href="#vidsSec">To Video Reviews Section</a></button>`; //link to go down to vids section
+      const commInform = `<p>Click on each thumbnail below to display comments</p>`;
+      $('.js-search-results').html
+      (`<h4>Items with Consumer Feedback:</h4>${vidButton} ${commInform} ${results.join("")}`); //data is object, items is array
   }
 
 
@@ -67,7 +71,7 @@ function displayProductToPage(data) {
 
 function displayReviewsToPage(reviewOrder) {
   return function(data) {               //function returning a function so scale down to 1 function (instead of 3 for each item)
-  // console.log(data);
+  console.log(data);
     const results = data.reviews.map((item, index) => renderCommentsResult(item));
     $(".js-search-results").on('click',`img:nth-of-type(${reviewOrder}), h3:nth-of-type(${reviewOrder})`,  function(event) {
           // console.log('userClicked');
@@ -82,7 +86,7 @@ function displayReviewsToPage(reviewOrder) {
       if (data.reviews.length === 0) {    //error handling
         $(`.js-search-results img:nth-of-type(${reviewOrder})`).after(`<p class="cr">No review comments available.</p>`);
       } else {  //Don't need quote marks if we use template strings for jquery selector?   
-        $(`.js-search-results img:nth-of-type(${reviewOrder})`).after(`<div class="cr"><p>Customer Reviews:</p> ${results.join("")}</div>`)
+        $(`.js-search-results img:nth-of-type(${reviewOrder})`).after(`<div class="cr"><p>Consumer Reviews:</p> ${results.join("")}</div>`);
         //join so no commas before each Title
         }
     });
@@ -90,7 +94,7 @@ function displayReviewsToPage(reviewOrder) {
 }
 
 function renderCommentsResult(item) {
-  console.log(item);
+  // console.log(item);
   const reviewTitle = item.title;
   const reviewComment = item.reviewText; //put if statement
 
@@ -125,8 +129,10 @@ function displayVidsToPage(data) {
     $(".js-search-results3").html(`<p>No video reviews available.</p>`);
   } else {
 
-  const results = data.items.map((item, index) => renderVideo(item));
-  $(".js-search-results3").html(`<h4>Video Reviews:</h4><button type="button"><a href="#feedbackSec">To Customer Reviews Section</a></button> ${results.join("")}`);
+      const results = data.items.map((item, index) => renderVideo(item));
+      const reviewsButton = `<button type="button"><a href="#feedbackSec">To Consumer Reviews Section</a></button>`;
+      const vidInform = `<p>Click on each thumbnail below to see video</p>`;
+      $(".js-search-results3").html(`<h4>Video Reviews:</h4>${reviewsButton} ${vidInform} ${results.join("")}`);
   }
 
    $('a.html5lightbox').html5lightbox();  //achor tag not in DOM yet so put here for lightbox to work
