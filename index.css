@@ -14,6 +14,10 @@ h1, .caption {
 	text-align: center;
 }
 
+.search-form {
+	text-align: center;
+}
+
 input.query {
 	width: 80%;
 	color: #354C69;
