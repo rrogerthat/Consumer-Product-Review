@@ -6,13 +6,11 @@ body {
 	background: #98A4B1;
 	color: #354C69;
 	font-family: 'Titillium Web', sans-serif;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 h1, .caption {
-	text-align: center;
-}
-
-.search-form {
 	text-align: center;
 }
 
@@ -57,75 +55,97 @@ button:hover {
 	box-shadow: 3px 3px 3px gray;
 }
 
-.js-search-results img:hover {
+.js-feedback-results p.noComment {	/**No review comments available**/
+	padding-top: 50px;
+	font-weight: bold;
+	font-size: large;
+}
+
+.js-feedback-results img {
+	border-radius: 10px;
+}
+
+.js-feedback-results img:hover {
   box-shadow: 8px 8px 8px gray;
 }
 
 .imgSelected {				/*Show what item you currently have selected */
-	border:2px solid #ccc;
+	border:3px solid #7788AA;
 	box-shadow: 5px 5px 5px gray;
 }
 
-.js-search-results h3:hover {
+.js-feedback-results .titleImg:hover {
 	text-decoration: underline;
 }
 
-.js-search-results h4 {
-	text-decoration: underline;
+.js-feedback-results .titleImg {
+	font-weight: bold;
+	font-size: large;
 }
 
-.js-search-results > p {	/** Click on each thumbnail to display comments **/
+.js-feedback-results h2 {
+	text-decoration: underline;
+	padding-top: 20px;
+}
+
+.js-feedback-results > p:nth-of-type(1) {	/** Click on each thumbnail to display comments **/
 	font-style: italic;
+	padding-bottom: 15px;
 }
 
-.js-search-results div > p {	/** Consumer Reviews **/
+.js-feedback-results div > p {	/** Consumer Reviews **/
 	text-decoration: underline;
 	font-weight: bold;
 }
 
-.js-search-results > button > a {
+.js-feedback-results > button > a {
 	color: #CCD1D8;
 	text-decoration: none;
 }
 
-.js-search-results2 > p {
-	font-weight: bold;
+.js-feedback-results li {
+	list-style-type: none;
+	border-bottom: 1px solid #D4D4D5;
+	padding-bottom: 5px;
+	margin-bottom: 10px;
 }
 
-.js-search-results3 > h4 {
+.js-video-results > h2 {
 	text-decoration: underline;
 	font-weight: bold;
 }
 
-.js-search-results3 > p {	/** Click on each thumbnail to play video **/
+.js-video-results > p {	/** Click on each thumbnail to play video **/
 	font-style: italic;
+	padding-bottom: 15px;
 }
 
-.js-search-results3 p:hover {
+.js-video-results > a {	/** Title for each video **/
+	text-decoration: none;
+	color: #354C69;
+	font-weight: bold;
+	font-size: large;
+}
+
+.js-video-results a:hover {
 	text-decoration: underline;
 }
 
-.js-search-results3 img:hover {
+.js-video-results img {
+	border-radius: 10px;
+}
+
+.js-video-results img:hover {
   box-shadow: 8px 8px 8px gray;
 }
 
-.js-search-results3 > button > a {
+.js-video-results > button > a {
 	color: #CCD1D8;
 	text-decoration: none;
 }
 
-/*.js-search-results {
-	float: left;
-	width: 50%;
+.js-video-results p.noVids {	/**No video reviews available**/
+	font-weight: bold;
+	font-size: large;
+	padding-bottom: 15px;
 }
-
-.js-search-results2 {
-	float: left;
-	width: 50%;
-}
-
-.js-search-results3 {
-	clear:both;
-	padding-top: 15px;
-	width: 50%;
-}*/

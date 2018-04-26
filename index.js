@@ -15,26 +15,26 @@ function renderProductTitle(item) {
 //template of product title and image
 // console.log(item);
   if (item.name === undefined) {
-    return `<p>No products available for Consumer Review Comments</p>`;
+    return `<p class="noComment">No products available for consumer review comments.</p>`;
   } else if (item.imageEntities === undefined) {
-      return `<h3>${item.name}</h3><br><img src="${item.mediumImage}" alt="thumbnail">`;
+      return `<p class="titleImg">${item.name}</p><img src="${item.mediumImage}" alt="thumbnail">`;
   } else {
-      return `<h3>${item.name}</h3><br><img src="${item.imageEntities[0].mediumImage}" alt="thumbnail">`;
-  }   // <a href=`h3:nth-of-type(${reviewOrder})`></a>
+      return `<p class="titleImg">${item.name}</p><img src="${item.imageEntities[0].mediumImage}" alt="thumbnail">`;
+  }  
 }
 
 function displayProductToPage(data) {
 //to display item name & img and retrieve item ID to get review comments JSON data
 // console.log(data); //display JSON object
   if (data.numItems === 0) {
-    $('.js-search-results').html(`<p>No products available for Consumer Review Comments</p>`);
+    $('.js-feedback-results').html(`<p class="noComment">No products available for consumer review comments.</p>`);
   } else {
       const results = data.items.map((item, index) => renderProductTitle(item));
 
       const vidButton = `<button type="button"><a href="#vidsSec">To Video Reviews Section</a></button>`; //link to go down to vids section
       const commInform = `<p>Click on each thumbnail below to display comments</p>`;
-      $('.js-search-results').html
-      (`<h4>Items with Consumer Feedback:</h4>${vidButton} ${commInform} ${results.join("")}`); //data is object, items is array
+      $('.js-feedback-results').html
+      (`<h2>Items with Consumer Feedback:</h2>${vidButton} ${commInform} ${results.join("")}`); //data is object, items is array
   }
 
 
@@ -71,9 +71,9 @@ function displayProductToPage(data) {
 
 function displayReviewsToPage(reviewOrder) {
   return function(data) {               //function returning a function so scale down to 1 function (instead of 3 for each item)
-  console.log(data);
+  // console.log(data);
     const results = data.reviews.map((item, index) => renderCommentsResult(item));
-    $(".js-search-results").on('click',`img:nth-of-type(${reviewOrder}), h3:nth-of-type(${reviewOrder})`,  function(event) {
+    $(".js-feedback-results").on('click',`img:nth-of-type(${reviewOrder}), h3:nth-of-type(${reviewOrder})`,  function(event) {
           // console.log('userClicked');
 
       const targetImage = $(`img:nth-of-type(${reviewOrder})`);   //provide border around currently selected item that comments are displayed
@@ -84,9 +84,9 @@ function displayReviewsToPage(reviewOrder) {
       $(".cr").remove();  //clear out previous comments and one's related to other products before displaying new comments
 
       if (data.reviews.length === 0) {    //error handling
-        $(`.js-search-results img:nth-of-type(${reviewOrder})`).after(`<p class="cr">No review comments available.</p>`);
+        $(`.js-feedback-results img:nth-of-type(${reviewOrder})`).after(`<p class="cr">No review comments available.</p>`);
       } else {  //Don't need quote marks if we use template strings for jquery selector?   
-        $(`.js-search-results img:nth-of-type(${reviewOrder})`).after(`<div class="cr"><p>Consumer Reviews:</p> ${results.join("")}</div>`);
+        $(`.js-feedback-results img:nth-of-type(${reviewOrder})`).after(`<div class="cr"><p>Consumer Reviews:</p> ${results.join("")}</div>`);
         //join so no commas before each Title
         }
     });
@@ -99,9 +99,9 @@ function renderCommentsResult(item) {
   const reviewComment = item.reviewText; //put if statement
 
   if (reviewTitle === undefined) {
-    return `<em>No Review Title available</em><br>${reviewComment}<br><br>`; 
+    return `<li><em>No Review Title available</em><br>${reviewComment}</li>`; 
   } else {
-      return `<em>${reviewTitle}</em><br>${reviewComment}<br><br>`;   
+      return `<li><em>${reviewTitle}</em><br>${reviewComment}</li>`;   
     // if append, clear out previous search results with jquery search button new. Use strong & paragraph (no <br>) for review comments
     }
 }
@@ -126,13 +126,13 @@ function displayVidsToPage(data) {
   // console.log(data);
 
   if (data.items.length === 0) {    //error handling
-    $(".js-search-results3").html(`<p>No video reviews available.</p>`);
+    $(".js-video-results").html(`<p class="noVids">No video reviews available.</p>`);
   } else {
 
       const results = data.items.map((item, index) => renderVideo(item));
       const reviewsButton = `<button type="button"><a href="#feedbackSec">To Consumer Reviews Section</a></button>`;
-      const vidInform = `<p>Click on each thumbnail below to see video</p>`;
-      $(".js-search-results3").html(`<h4>Video Reviews:</h4>${reviewsButton} ${vidInform} ${results.join("")}`);
+      const vidInform = `<p>Click on each thumbnail below to watch video</p>`;
+      $(".js-video-results").html(`<h2>Video Reviews:</h2>${reviewsButton} ${vidInform} ${results.join("")}`);
   }
 
    $('a.html5lightbox').html5lightbox();  //achor tag not in DOM yet so put here for lightbox to work
@@ -143,11 +143,11 @@ function renderVideo(item) {   //item is each object in array
   const videoTitle = item.snippet.title;
   const thumbnailPic = item.snippet.thumbnails.medium.url;
   const videoLink = item.id.videoId;
-    return `<a href="https://www.youtube.com/watch?v=${videoLink}" class="html5lightbox"><p>${videoTitle}</p><img src="${thumbnailPic}" alt="thumbnail"></a>`;
+    return `<a href="https://www.youtube.com/watch?v=${videoLink}" class="html5lightbox"><p class="titleImg">${videoTitle}</p><img src="${thumbnailPic}" alt="thumbnail"></a>`;
 }                                                                                       //changed to /embed from /watch?v= to display
 
 function displError(err) {
-  $(".js-search-results3").html(`<p>No video reviews available.</p>`);
+  $(".js-video-results").html(`<p class="noVids">No video reviews available.</p>`);
 }
 
 function beginSearch() {
