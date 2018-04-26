@@ -84,9 +84,11 @@ function displayReviewsToPage(reviewOrder) {
       $(".cr").remove();  //clear out previous comments and one's related to other products before displaying new comments
 
       if (data.reviews.length === 0) {    //error handling
-        $(`.js-feedback-results img:nth-of-type(${reviewOrder})`).after(`<p class="cr">No review comments available.</p>`);
+        $(`.js-feedback-results img:nth-of-type(${reviewOrder})`).
+        after(`<p class="cr">No review comments available.</p>`);
       } else {  //Don't need quote marks if we use template strings for jquery selector?   
-        $(`.js-feedback-results img:nth-of-type(${reviewOrder})`).after(`<div class="cr"><p>Consumer Reviews:</p> ${results.join("")}</div>`);
+          $(`.js-feedback-results img:nth-of-type(${reviewOrder})`).
+          after(`<div class="cr"><p>Consumer Reviews:</p><ul>${results.join("")}</ul></div>`);
         //join so no commas before each Title
         }
     });
@@ -96,7 +98,7 @@ function displayReviewsToPage(reviewOrder) {
 function renderCommentsResult(item) {
   // console.log(item);
   const reviewTitle = item.title;
-  const reviewComment = item.reviewText; //put if statement
+  const reviewComment = item.reviewText; 
 
   if (reviewTitle === undefined) {
     return `<li><em>No Review Title available</em><br>${reviewComment}</li>`; 

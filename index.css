@@ -51,8 +51,8 @@ input.query:-moz-placeholder {
 
 button {							/*search button */
 	border: none;
-	background-color: #4F647E;
-	color: #CCD1D8;
+	background-color: #3F4D64;
+	color: #EDEDED;
 	font-family: 'Titillium Web', sans-serif;
 	margin-left: 3px;
 	padding: 2px 4px;
@@ -109,16 +109,20 @@ button:hover {
 }
 
 .js-feedback-results > button > a {
-	color: #CCD1D8;
+	color: #EDEDED;
 	text-decoration: none;
 }
 
-.js-feedback-results li {
-	list-style-type: none;
-	border-bottom: 1px solid #33759F;
+.js-feedback-results ul li {
+	border-bottom: 2px solid #DDDEEA;
 	padding-bottom: 5px;
 	margin-bottom: 10px;
 }
+
+.js-feedback-results ul {	/**works only if this style comes after li styles**/
+    list-style: none;
+    padding-left: 0;
+}​
 
 .js-video-results > h2 {
 	text-decoration: underline;
@@ -150,7 +154,7 @@ button:hover {
 }
 
 .js-video-results > button > a {
-	color: #CCD1D8;
+	color: #EDEDED;
 	text-decoration: none;
 }
 
