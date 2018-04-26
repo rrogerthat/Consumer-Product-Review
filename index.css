@@ -3,7 +3,7 @@
 }
 
 body {
-	background: #98A4B1;
+	background: #88B8DF;
 	color: #354C69;
 	font-family: 'Titillium Web', sans-serif;
 	padding-left: 10px;
@@ -12,6 +12,10 @@ body {
 
 h1, .caption {
 	text-align: center;
+}
+
+.caption {
+	font-size: large;
 }
 
 .search-form {
@@ -52,11 +56,13 @@ button {							/*search button */
 	font-family: 'Titillium Web', sans-serif;
 	margin-left: 3px;
 	padding: 2px 4px;
+	font-weight: bold;
 }
 
 button:hover {
 	font-weight: bold;
 	box-shadow: 3px 3px 3px gray;
+	text-decoration: underline;
 }
 
 .js-feedback-results p.noComment {	/**No review comments available**/
@@ -109,7 +115,7 @@ button:hover {
 
 .js-feedback-results li {
 	list-style-type: none;
-	border-bottom: 1px solid #D4D4D5;
+	border-bottom: 1px solid #33759F;
 	padding-bottom: 5px;
 	margin-bottom: 10px;
 }
