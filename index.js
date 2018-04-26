@@ -17,9 +17,9 @@ function renderProductTitle(item) {
   if (item.name === undefined) {
     return `<p class="noComment">No products available for consumer review comments.</p>`;
   } else if (item.imageEntities === undefined) {
-      return `<p class="titleImg">${item.name}</p><img src="${item.mediumImage}" alt="thumbnail">`;
+      return `<p class="titleImg">${item.name}</p><img src="${item.mediumImage}" tabindex="0" alt="thumbnail">`;
   } else {
-      return `<p class="titleImg">${item.name}</p><img src="${item.imageEntities[0].mediumImage}" alt="thumbnail">`;
+      return `<p class="titleImg">${item.name}</p><img src="${item.imageEntities[0].mediumImage}" tabindex="0" alt="thumbnail">`;
   }  
 }
 
@@ -31,8 +31,8 @@ function displayProductToPage(data) {
   } else {
       const results = data.items.map((item, index) => renderProductTitle(item));
 
-      const vidButton = `<button type="button"><a href="#vidsSec">To Video Reviews Section</a></button>`; //link to go down to vids section
-      const commInform = `<p>Click on each thumbnail below to display comments</p>`;
+      const vidButton = `<button type="button" role="button"><a href="#vidsSec">To Video Reviews Section</a></button>`; //link to go down to vids section
+      const commInform = `<div class="clickInst">Click on each thumbnail below to display comments</div>`;
       $('.js-feedback-results').html
       (`<h2>Items with Consumer Feedback:</h2>${vidButton} ${commInform} ${results.join("")}`); //data is object, items is array
   }
@@ -73,7 +73,7 @@ function displayReviewsToPage(reviewOrder) {
   return function(data) {               //function returning a function so scale down to 1 function (instead of 3 for each item)
   // console.log(data);
     const results = data.reviews.map((item, index) => renderCommentsResult(item));
-    $(".js-feedback-results").on('click',`img:nth-of-type(${reviewOrder}), h3:nth-of-type(${reviewOrder})`,  function(event) {
+    $(".js-feedback-results").on('click keyup', `img:nth-of-type(${reviewOrder}), p.titleImg:nth-of-type(${reviewOrder})`,  function(event) {
           // console.log('userClicked');
 
       const targetImage = $(`img:nth-of-type(${reviewOrder})`);   //provide border around currently selected item that comments are displayed
@@ -101,9 +101,9 @@ function renderCommentsResult(item) {
   const reviewComment = item.reviewText; 
 
   if (reviewTitle === undefined) {
-    return `<li><em>No Review Title available</em><br>${reviewComment}</li>`; 
+    return `<li><b>No Review Title available</b><br>${reviewComment}</li>`; 
   } else {
-      return `<li><em>${reviewTitle}</em><br>${reviewComment}</li>`;   
+      return `<li><b>${reviewTitle}</b><br>${reviewComment}</li>`;   
     // if append, clear out previous search results with jquery search button new. Use strong & paragraph (no <br>) for review comments
     }
 }
@@ -132,7 +132,7 @@ function displayVidsToPage(data) {
   } else {
 
       const results = data.items.map((item, index) => renderVideo(item));
-      const reviewsButton = `<button type="button"><a href="#feedbackSec">To Consumer Reviews Section</a></button>`;
+      const reviewsButton = `<button type="button" role="button"><a href="#feedbackSec">To Consumer Reviews Section</a></button>`;
       const vidInform = `<p>Click on each thumbnail below to watch video</p>`;
       $(".js-video-results").html(`<h2>Video Reviews:</h2>${reviewsButton} ${vidInform} ${results.join("")}`);
   }
@@ -145,7 +145,7 @@ function renderVideo(item) {   //item is each object in array
   const videoTitle = item.snippet.title;
   const thumbnailPic = item.snippet.thumbnails.medium.url;
   const videoLink = item.id.videoId;
-    return `<a href="https://www.youtube.com/watch?v=${videoLink}" class="html5lightbox"><p class="titleImg">${videoTitle}</p><img src="${thumbnailPic}" alt="thumbnail"></a>`;
+    return `<a href="https://www.youtube.com/watch?v=${videoLink}" class="html5lightbox"><p>${videoTitle}</p><img src="${thumbnailPic}" alt="thumbnail"></a>`;
 }                                                                                       //changed to /embed from /watch?v= to display
 
 function displError(err) {

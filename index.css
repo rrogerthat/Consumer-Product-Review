@@ -10,6 +10,10 @@ body {
 	padding-right: 10px;
 }
 
+h1 {
+	text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+}
+
 h1, .caption {
 	text-align: center;
 }
@@ -98,14 +102,16 @@ button:hover {
 	padding-top: 20px;
 }
 
-.js-feedback-results > p:nth-of-type(1) {	/** Click on each thumbnail to display comments **/
+.js-feedback-results div.clickInst {	/** Click on each thumbnail to display comments **/
 	font-style: italic;
+	padding-top: 15px;
 	padding-bottom: 15px;
 }
 
 .js-feedback-results div > p {	/** Consumer Reviews **/
 	text-decoration: underline;
 	font-weight: bold;
+	font-size: large;
 }
 
 .js-feedback-results > button > a {
@@ -132,6 +138,11 @@ button:hover {
 .js-video-results > p {	/** Click on each thumbnail to play video **/
 	font-style: italic;
 	padding-bottom: 15px;
+}
+
+.js-video-results h2 {
+	padding-top: 30px;
+	text-decoration: underline;
 }
 
 .js-video-results > a {	/** Title for each video **/
