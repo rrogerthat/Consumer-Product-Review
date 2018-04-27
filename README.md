@@ -4,7 +4,7 @@
 
 Name: Consumer Products Review Search App
 
-Link: git@github.com:rrogerthat/Consumer-Product-Review.git
+Link: https://rrogerthat.github.io/Consumer-Product-Review/
 
 ![appscreenshot](https://user-images.githubusercontent.com/33015217/39335086-687b7c92-4966-11e8-951f-09de4d84ca6a.PNG)
 
