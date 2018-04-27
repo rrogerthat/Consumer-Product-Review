@@ -1,10 +1,10 @@
 function getDataFromWalApi(searchItem, callback) {
 //retrieve data from Walmart API based on what you searched for
 
-  // $.getJSON(WALMART_SEARCH_URL, callback); //does not work with CORS
-  
+// $.getJSON(WALMART_SEARCH_URL, callback); //does not work with CORS
   $.ajax({
-    url: `https://api.walmartlabs.com/v1/search?&format=json&apiKey=738gx42wg2zuq5cxrc4rfn7v&numItems=3&query=${searchItem}`, //max 4 results
+    url: `https://api.walmartlabs.com/v1/search?&format=json&apiKey=738gx42wg2zuq5cxrc4rfn7v&numItems=3&query=${searchItem}`, 
+    //3 results
     jsonp: "callback",
     dataType: "jsonp",
     success: displayProductToPage
@@ -17,9 +17,9 @@ function renderProductTitle(item) {
   if (item.name === undefined) {
     return `<p class="noComment">No products available for consumer review comments.</p>`;
   } else if (item.imageEntities === undefined) {
-      return `<p class="titleImg">${item.name}</p><img src="${item.mediumImage}" tabindex="0" alt="thumbnail">`;
+      return `<p class="titleImg">${item.name}</p><img src="${item.mediumImage}" tabindex="0" alt="thumbnail" role="img">`;
   } else {
-      return `<p class="titleImg">${item.name}</p><img src="${item.imageEntities[0].mediumImage}" tabindex="0" alt="thumbnail">`;
+      return `<p class="titleImg">${item.name}</p><img src="${item.imageEntities[0].mediumImage}" tabindex="0" alt="thumbnail" role="img">`;
   }  
 }
 
@@ -29,16 +29,16 @@ function displayProductToPage(data) {
   if (data.numItems === 0) {
     $('.js-feedback-results').html(`<p class="noComment">No products available for consumer review comments.</p>`);
   } else {
-      const results = data.items.map((item, index) => renderProductTitle(item));
+      const results = data.items.map((item, index) => renderProductTitle(item)); //data is object, items is array
 
-      const vidButton = `<button type="button" role="button"><a href="#vidsSec">To Video Reviews Section</a></button>`; //link to go down to vids section
+      const vidButton = `<button type="button" role="button"><a href="#vidsSec" role="link">To Video Reviews Section</a></button>`; 
+      //link to Vids Section
       const commInform = `<div class="clickInst">Click on each thumbnail below to display comments</div>`;
       $('.js-feedback-results').html
-      (`<h2>Items with Consumer Feedback:</h2>${vidButton} ${commInform} ${results.join("")}`); //data is object, items is array
+      (`<h2 role="region" aria-labelledby="region1">Items with Consumer Feedback:</h2>${vidButton} ${commInform} ${results.join("")}`); 
   }
 
-
-                              //for just 1 item so far??? make the comments request after you click on img, shopping list app ref
+  
   const WALMART_REVIEW_URL = `https://api.walmartlabs.com/v1/reviews/${data.items[0].itemId}?format=json&apiKey=738gx42wg2zuq5cxrc4rfn7v`;
     // $.getJSON(WALMART_REVIEW_URL, displayReviewToPage); //bad with CORS
     //need ID from 1st JSON object to get review info from 2nd JSON object
@@ -73,22 +73,22 @@ function displayReviewsToPage(reviewOrder) {
   return function(data) {               //function returning a function so scale down to 1 function (instead of 3 for each item)
   // console.log(data);
     const results = data.reviews.map((item, index) => renderCommentsResult(item));
-    $(".js-feedback-results").on('click keyup', `img:nth-of-type(${reviewOrder}), p.titleImg:nth-of-type(${reviewOrder})`,  function(event) {
-          // console.log('userClicked');
+    $(".js-feedback-results").on('click keyup', `img:nth-of-type(${reviewOrder}), p.titleImg:nth-of-type(${reviewOrder})`, 
+    function(event) {
 
-      const targetImage = $(`img:nth-of-type(${reviewOrder})`);   //provide border around currently selected item that comments are displayed
+      const targetImage = $(`img:nth-of-type(${reviewOrder})`); //provide border around selected item that comments are displayed
       const otherImages = $("img").not(targetImage);
       otherImages.removeClass("imgSelected");
       targetImage.addClass("imgSelected");
 
       $(".cr").remove();  //clear out previous comments and one's related to other products before displaying new comments
 
-      if (data.reviews.length === 0) {    //error handling
+      if (data.reviews.length === 0) {  //error handling
         $(`.js-feedback-results img:nth-of-type(${reviewOrder})`).
         after(`<p class="cr">No review comments available.</p>`);
       } else {  //Don't need quote marks if we use template strings for jquery selector?   
           $(`.js-feedback-results img:nth-of-type(${reviewOrder})`).
-          after(`<div class="cr"><p>Consumer Reviews:</p><ul>${results.join("")}</ul></div>`);
+          after(`<div class="cr"><p>Consumer Reviews:</p><ul role="list">${results.join("")}</ul></div>`);
         //join so no commas before each Title
         }
     });
@@ -104,7 +104,6 @@ function renderCommentsResult(item) {
     return `<li><b>No Review Title available</b><br>${reviewComment}</li>`; 
   } else {
       return `<li><b>${reviewTitle}</b><br>${reviewComment}</li>`;   
-    // if append, clear out previous search results with jquery search button new. Use strong & paragraph (no <br>) for review comments
     }
 }
 
@@ -125,32 +124,27 @@ function getDataFromTubeApi(searchItem, callback) {
 
 function displayVidsToPage(data) {
 //display YouTube thumbnails
-  // console.log(data);
-
+console.log(data);
   if (data.items.length === 0) {    //error handling
     $(".js-video-results").html(`<p class="noVids">No video reviews available.</p>`);
   } else {
-
       const results = data.items.map((item, index) => renderVideo(item));
-      const reviewsButton = `<button type="button" role="button"><a href="#feedbackSec">To Consumer Reviews Section</a></button>`;
+      const reviewsButton = `<button type="button" role="button"><a href="#feedbackSec" role="link">To Consumer Reviews Section</a></button>`;
       const vidInform = `<p>Click on each thumbnail below to watch video</p>`;
-      $(".js-video-results").html(`<h2>Video Reviews:</h2>${reviewsButton} ${vidInform} ${results.join("")}`);
+      $(".js-video-results").
+      html(`<h2 role="region" aria-labelledby="region2">Video Reviews:</h2>${reviewsButton} ${vidInform} ${results.join("")}`);
   }
 
    $('a.html5lightbox').html5lightbox();  //achor tag not in DOM yet so put here for lightbox to work
 }
 
 function renderVideo(item) {   //item is each object in array
-//template of what to display in this function alone
+//template of what to display
   const videoTitle = item.snippet.title;
   const thumbnailPic = item.snippet.thumbnails.medium.url;
   const videoLink = item.id.videoId;
-    return `<a href="https://www.youtube.com/watch?v=${videoLink}" class="html5lightbox"><p>${videoTitle}</p><img src="${thumbnailPic}" alt="thumbnail"></a>`;
-}                                                                                       //changed to /embed from /watch?v= to display
-
-function displError(err) {
-  $(".js-video-results").html(`<p class="noVids">No video reviews available.</p>`);
-}
+    return `<a href="https://www.youtube.com/watch?v=${videoLink}" class="html5lightbox" role="link"><p>${videoTitle}</p><img src="${thumbnailPic}" alt="thumbnail" role="img"></a>`;
+}           //if problems: change to embed/ from watch?v= to display due to CORS
 
 function beginSearch() {
 //start app when search begins

@@ -8,6 +8,7 @@ body {
 	font-family: 'Titillium Web', sans-serif;
 	padding-left: 10px;
 	padding-right: 10px;
+	margin: 0 auto;
 }
 
 h1 {
@@ -64,26 +65,33 @@ button {							/*search button */
 }
 
 button:hover {
-	font-weight: bold;
 	box-shadow: 3px 3px 3px gray;
 	text-decoration: underline;
 }
 
-.js-feedback-results p.noComment {	/**No review comments available**/
+.js-feedback-results, .js-video-results {	/**to center all the search results**/
+	text-align: center;
+}
+
+.js-feedback-results p.noComment {	/**For: No review comments available**/
 	padding-top: 50px;
 	font-weight: bold;
-	font-size: large;
+	font-size: larger;
+	font-style: italic;
 }
 
 .js-feedback-results img {
+	display: block;			/**in order to center product img**/
 	border-radius: 10px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .js-feedback-results img:hover {
   box-shadow: 8px 8px 8px gray;
 }
 
-.imgSelected {				/*Show what item you currently have selected */
+.imgSelected {				/*To show what item you currently have selected */
 	border:3px solid #7788AA;
 	box-shadow: 5px 5px 5px gray;
 }
@@ -102,13 +110,13 @@ button:hover {
 	padding-top: 20px;
 }
 
-.js-feedback-results div.clickInst {	/** Click on each thumbnail to display comments **/
+.js-feedback-results div.clickInst {	/**For: Click on each thumbnail to display comments **/
 	font-style: italic;
 	padding-top: 15px;
 	padding-bottom: 15px;
 }
 
-.js-feedback-results div > p {	/** Consumer Reviews **/
+.js-feedback-results div > p {	/**For: Consumer Reviews **/
 	text-decoration: underline;
 	font-weight: bold;
 	font-size: large;
@@ -135,7 +143,7 @@ button:hover {
 	font-weight: bold;
 }
 
-.js-video-results > p {	/** Click on each thumbnail to play video **/
+.js-video-results > p {	/**For: Click on each thumbnail to play video **/
 	font-style: italic;
 	padding-bottom: 15px;
 }
@@ -169,8 +177,22 @@ button:hover {
 	text-decoration: none;
 }
 
-.js-video-results p.noVids {	/**No video reviews available**/
+.js-video-results p.noVids {	/**For: No video reviews available**/
 	font-weight: bold;
-	font-size: large;
+	font-size: larger;
+	padding-top: 15px;
 	padding-bottom: 15px;
+}
+
+@media screen and (min-width: 992px) {
+	input.query {
+		width: 50%;
+	}
+}
+
+@media screen and (max-width: 490px) {
+	.js-video-results img {
+		width: 95%;
+	}
+
 }
