@@ -9,12 +9,12 @@
   </head>
   <body>
     <h1 role="banner">Consumer Products Review Search</h1>
-    <p class="caption">Search for products available at your typical local retailers to access consumer and video reviews.</p>
+    <p class="caption" aria-label="caption">Search for products available at your typical local retailers to access consumer and video reviews.</p>
       <form action="#" class="js-search-form search-form" method="post" role="form">
-        <label for="query" aria-label="search">
+        <label for="query" role="search">
           <input type="text" name="query" class="query js-query" placeholder="Ex. Apple Ipad Pro" required></label>
-          <button type="submit" role="button">Search</button>
-          <div class="queryItem"><!--inform user what they searched for here --></div>
+          <button type="submit" role="button" aria-label="search">Search</button>
+          <div class="queryItem" aria-label="search input"><!--inform user what they searched for here --></div>
       </form>
     
 

@@ -35,7 +35,7 @@ function displayProductToPage(data) {
       //link to Vids Section
       const commInform = `<div class="clickInst">Click on each thumbnail below to display comments</div>`;
       $('.js-feedback-results').html
-      (`<h2 role="region" aria-labelledby="region1">Items with Consumer Feedback:</h2>${vidButton} ${commInform} ${results.join("")}`); 
+      (`<h2 role="region">Items with Consumer Feedback:</h2>${vidButton} ${commInform} ${results.join("")}`); 
   }
 
   
@@ -132,7 +132,7 @@ console.log(data);
       const reviewsButton = `<button type="button" role="button"><a href="#feedbackSec" role="link">To Consumer Reviews Section</a></button>`;
       const vidInform = `<p>Click on each thumbnail below to watch video</p>`;
       $(".js-video-results").
-      html(`<h2 role="region" aria-labelledby="region2">Video Reviews:</h2>${reviewsButton} ${vidInform} ${results.join("")}`);
+      html(`<h2 role="region">Video Reviews:</h2>${reviewsButton} ${vidInform} ${results.join("")}`);
   }
 
    $('a.html5lightbox').html5lightbox();  //achor tag not in DOM yet so put here for lightbox to work
