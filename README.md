@@ -12,8 +12,13 @@ Consumer Products Review Search App allows you to search for any consumer produc
 provide consumer review feedback along with video reviews on the product you searched for.
 
 Technologies used:
-HTML/CSS
-Javascript
-JQuery
-Lightbox plugin
-Walmart and YouTube API's
+
+1. HTML/CSS
+
+2. Javascript
+
+3. JQuery
+
+4. Lightbox plugin
+
+5. Walmart and YouTube API's
