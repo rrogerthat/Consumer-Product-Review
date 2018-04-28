@@ -4,7 +4,7 @@
 
 Name: Consumer Products Review Search App
 
-Link: git@github.com:rrogerthat/Consumer-Product-Review.git
+Link: https://rrogerthat.github.io/Consumer-Product-Review/
 
 ![appscreenshot](https://user-images.githubusercontent.com/33015217/39335086-687b7c92-4966-11e8-951f-09de4d84ca6a.PNG)
 
@@ -12,8 +12,13 @@ Consumer Products Review Search App allows you to search for any consumer produc
 provide consumer review feedback along with video reviews on the product you searched for.
 
 Technologies used:
-HTML/CSS
-Javascript
-JQuery
-Lightbox plugin
-Walmart and YouTube API's
+
+1. HTML/CSS
+
+2. Javascript
+
+3. JQuery
+
+4. Lightbox plugin
+
+5. Walmart and YouTube API's
