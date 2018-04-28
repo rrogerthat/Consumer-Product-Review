@@ -1,8 +1,5 @@
-* {
-	box-sizing: border-box;
-}
-
 body {
+	box-sizing: border-box;
 	background: #B6C0D5;
 	color: #354C69;
 	font-family: 'Titillium Web', sans-serif;
@@ -27,11 +24,17 @@ h1, .caption {
 	text-align: center;
 }
 
+input.query:focus {
+	border: 2px solid #1C5F9C;
+}
+
 input.query {
 	width: 80%;
-	color: #354C69;
+	color: #0C4673;
+	font-weight: bold;
 	font-family: 'Titillium Web', sans-serif;
 	padding: 3px;
+	caret-color: #0D7BCF;
 }
 
 input.query::-webkit-input-placeholder {			/* input box placeholder for various browsers */
@@ -73,10 +76,23 @@ button:hover {
 	text-align: center;
 }
 
-.js-feedback-results p.noComment {	/**For: No review comments available**/
+.border {
+	/*border: 3px solid #326D9A;*/
+	border-radius: 10px;
+	background-color: #D9E8F7;
+	margin: 15px 10px;
+	padding: 10px;
+	box-shadow: 10px 10px 6px -6px #777;
+}
+
+.js-feedback-results p.noComment {	/**For: No products available for consumer review comments.**/
 	padding-top: 50px;
 	font-weight: bold;
 	font-size: larger;
+	font-style: italic;
+}
+
+.js-feedback-results p.cr {		/*For: No review comments available.*/
 	font-style: italic;
 }
 
@@ -96,11 +112,12 @@ button:hover {
 	box-shadow: 5px 5px 5px gray;
 }
 
-.js-feedback-results .titleImg:hover {
+.js-feedback-results div > .titleImg:hover {	/*title for each product*/
 	text-decoration: underline;
 }
 
-.js-feedback-results .titleImg {
+.js-feedback-results div > .titleImg {
+	text-decoration: none;
 	font-weight: bold;
 	font-size: large;
 }
@@ -116,7 +133,7 @@ button:hover {
 	padding-bottom: 15px;
 }
 
-.js-feedback-results div > p {	/**For: Consumer Reviews **/
+.js-feedback-results .cr > p {	/*For: Consumer Reviews */
 	text-decoration: underline;
 	font-weight: bold;
 	font-size: large;
@@ -128,9 +145,10 @@ button:hover {
 }
 
 .js-feedback-results ul li {
-	border-bottom: 2px solid #DDDEEA;
+	border-bottom: 2px solid #7AA5CE;
 	padding-bottom: 5px;
 	margin-bottom: 10px;
+	text-align: left;		/*have comments aligned to left instead of centered*/
 }
 
 .js-feedback-results ul {	/**works only if this style comes after li styles**/
@@ -153,7 +171,7 @@ button:hover {
 	text-decoration: underline;
 }
 
-.js-video-results > a {	/** Title for each video **/
+.js-video-results div > a {	/** Title for each video **/
 	text-decoration: none;
 	color: #354C69;
 	font-weight: bold;
@@ -166,6 +184,7 @@ button:hover {
 
 .js-video-results img {
 	border-radius: 10px;
+	width: 95%;
 }
 
 .js-video-results img:hover {
@@ -177,7 +196,7 @@ button:hover {
 	text-decoration: none;
 }
 
-.js-video-results p.noVids {	/**For: No video reviews available**/
+.js-video-results p.noVids {	/**For: 	video reviews available**/
 	font-weight: bold;
 	font-size: larger;
 	padding-top: 15px;
@@ -188,11 +207,14 @@ button:hover {
 	input.query {
 		width: 50%;
 	}
+	body {
+		width: 70%;
+	}
 }
 
-@media screen and (max-width: 490px) {
+@media screen and (min-width: 370px) {
 	.js-video-results img {
-		width: 95%;
+		width: auto;
 	}
 
 }
