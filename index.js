@@ -157,6 +157,7 @@ function beginSearch() {
   getDataFromWalApi(targetVal, displayProductToPage);
   getDataFromTubeApi(targetVal, displayVidsToPage);
 
+  $(".mainpic").remove();
   $(".queryItem").html(`Search results for: ${targetVal}`);   
   });
 
