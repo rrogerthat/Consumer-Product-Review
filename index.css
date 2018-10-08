@@ -3,6 +3,7 @@ body {
 	background: #B6C0D5;
 	color: #354C69;
 	font-family: 'Titillium Web', sans-serif;
+	font-size: 16px;
 	padding-left: 10px;
 	padding-right: 10px;
 	margin: 0 auto;
@@ -34,10 +35,12 @@ input.query:focus {
 }
 
 input.query {
-	width: 80%;
+	width: 85%;
 	color: #0C4673;
+	border: 1px solid #0C4673;
 	font-weight: bold;
 	font-family: 'Titillium Web', sans-serif;
+	font-size: 16px;
 	padding: 3px;
 	caret-color: #0D7BCF;
 }
@@ -67,9 +70,15 @@ button {							/*search button */
 	background-color: #3F4D64;
 	color: #EDEDED;
 	font-family: 'Titillium Web', sans-serif;
+	font-size: 16px;
 	margin-left: 3px;
 	padding: 2px 4px;
 	font-weight: bold;
+}
+
+#searchBtn {
+	display: block;
+	margin: 10px auto;
 }
 
 button:hover {
@@ -95,7 +104,7 @@ button:hover {
 	border-radius: 10px;
 	background-color: #D9E8F7;
 	margin: 15px 10px;
-	padding: 10px;
+	padding: 10px 10px 20px;
 	box-shadow: 10px 10px 6px -6px #777;
 }
 
@@ -217,16 +226,19 @@ button:hover {
 	padding-bottom: 15px;
 }
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 910px) {
 	input.query {
-		width: 50%;
-	}
-	body {
 		width: 70%;
 	}
 }
 
-@media screen and (min-width: 370px) {
+@media screen and (min-width: 992px) {
+	body {
+		width: 75%;
+	}
+}
+
+@media screen and (min-width: 430px) {
 	.js-video-results img {
 		width: auto;
 	}
