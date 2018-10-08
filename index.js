@@ -2,7 +2,7 @@ function getDataFromWalApi(searchItem, callback) {
 //retrieve data from Walmart API based on what you searched for
 
 // $.getJSON(WALMART_SEARCH_URL, callback); //does not work with CORS
-  $.ajax({
+  $.ajax({ //can also name query object and call it thru ajax
     url: `https://api.walmartlabs.com/v1/search?&format=json&apiKey=738gx42wg2zuq5cxrc4rfn7v&numItems=3&query=${searchItem}`, 
     //3 results
     jsonp: "callback",
@@ -24,7 +24,7 @@ function renderProductTitle(item) {
 }
 
 function displayProductToPage(data) {
-//to display item name & img and retrieve item ID to get review comments JSON data
+//to display item name & img and retrieve item ID to get review comments JSON data on another URL
 // console.log(data); //display JSON object
   if (data.numItems === 0) {
     $('.js-feedback-results').html(`<p class="noComment">No products available for consumer review comments.</p>`);
@@ -71,7 +71,7 @@ function displayProductToPage(data) {
 
 function displayReviewsToPage(reviewOrder) {
   return function(data) {               //function returning a function so scale down to 1 function (instead of 3 for each item)
-  // console.log(data);
+  console.log(data);
     const results = data.reviews.map((item, index) => renderCommentsResult(item));
     $(".js-feedback-results").on('click keyup', `img:nth-of-type(${reviewOrder}), p.titleImg:nth-of-type(${reviewOrder})`, 
     function(event) {
@@ -86,7 +86,7 @@ function displayReviewsToPage(reviewOrder) {
       if (data.reviews.length === 0) {  //error handling
         $(`.js-feedback-results img:nth-of-type(${reviewOrder})`).
         after(`<p class="cr">No review comments available.</p>`);
-      } else {  //Don't need quote marks if we use template strings for jquery selector?   
+      } else {    
           $(`.js-feedback-results img:nth-of-type(${reviewOrder})`).
           after(`<div class="cr"><p>Consumer Reviews:</p><ul role="list">${results.join("")}</ul></div>`);
         //join so no commas before each Title
@@ -112,7 +112,7 @@ const YOUTUBE_SEARCH_URL = 'https://www.googleapis.com/youtube/v3/search';
 function getDataFromTubeApi(searchItem, callback) {
 //retrieve data from YouTube API based on what you searched for
     const query = {
-    q: `${searchItem} review`, 
+    q: `${searchItem} review`, //can also do in:name 
     maxResults: 4,
     type: 'video',
     part: 'snippet',
@@ -124,7 +124,7 @@ function getDataFromTubeApi(searchItem, callback) {
 
 function displayVidsToPage(data) {
 //display YouTube thumbnails
-console.log(data);
+// console.log(data);
   if (data.items.length === 0) {    //error handling
     $(".js-video-results").html(`<p class="noVids">No video reviews available.</p>`);
   } else {
