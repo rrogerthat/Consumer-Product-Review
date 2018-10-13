@@ -31,18 +31,19 @@ h1, .caption {
 }
 
 input.query:focus {
-	border: 2px solid #1C5F9C;
+	border: 3px solid #1C5F9C;
 }
 
 input.query {
 	width: 85%;
 	color: #0C4673;
-	border: 1px solid #0C4673;
+	border: 2px solid #7191D5;
 	font-weight: bold;
 	font-family: 'Titillium Web', sans-serif;
 	font-size: 16px;
 	padding: 3px;
 	caret-color: #0D7BCF;
+	box-shadow: 0 2px 8px #7191D5;
 }
 
 input.query::-webkit-input-placeholder {			/* input box placeholder for various browsers */
